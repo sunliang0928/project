@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * defineProperty
+         * 属性描述符：writable, configurable, enumerable, value, get/set
+        */
+        
+        var obj = { a: 1 };
+
+        // writable 是否可写
+        Object.defineProperty(obj, 'a', {
+            writable: false
+        })
+
+        // configurable  是否可被删除
+        // Object.defineProperty(obj, 'a', {
+        //     configurable: false
+        // })
+
+        // enumerable  是否可被枚举
+        Object.defineProperty(obj, 'a', {
+            enumerable: false
+        })
+
+        // value  修改value值
+        Object.defineProperty(obj, 'a', {
+            value: 1000
+        })
+
+        // get/set
+        Object.defineProperty(obj, 'a', {
+            get(){
+                return '30'
+            },
+            set(val){
+                console.log(val)  // 30
+            }
+        })
+
+        /**
+         * proxy  代理
+         * 
+        */
+         
+        var obj2 = {};
+        var proxy = new Proxy(obj2, {
+            get(tar, key){  // 获取值
+                console.log("get.....",tar,key)
+            },
+            set(tar, key, val){  // 设置值
+                console.log("set.....",tar,key,val)
+            }
+        })
+
+        /**
+         * Promise , async/await , generator
+         * Promise的三种状态： pending , fulfilled , rejected
+        */
+
+        function loadImg(src){
+            let img = new Image();
+            img.src = src;
+            return new Promise((resolve,reject)=>{
+                img.onload = function(){
+                    resolve(img)
+                };
+                img.onerror = function(e){
+                    reject(e)
+                }
+            })
+        }
+        const src = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560672611&di=11e8e71eae844b3deca7dc4c181fb718&imgtype=jpg&er=1&src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F151369381%2Flarge.jpg';
+
+        loadImg(src).then(res=>{
+            document.body.appendChild(res)
+            // return Promise.resolve('555')
+            return Promise.reject('error')
+        },err=>{
+            console.log(err);           
+        }).then(res2=>{
+            console.log('res2.....',res2)
+        },err2=>{
+            console.log('err2.....',err2)
+        }).then(res3=>{
+            console.log('res3.....',res3)
+        },err3=>{
+            console.log('err3.....',err3)
+        }).catch(error=>{
+            console.log('catch....',error)
+        })
+    </script>
+</body>
+
+</html>
