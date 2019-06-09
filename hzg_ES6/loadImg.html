@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LoadImg</title>
+    <style>
+        img{
+            width:200px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function loadImg(url){
+            return new Promise((resolve,reject)=>{
+                let img = new Image();
+                img.src = url;
+                img.onload = function(){
+                    setTimeout(function(){
+                        resolve(img);
+                    },200)   
+                };
+                img.onerror = function(e){
+                    reject(new Error('图片加载失败'));
+                }
+            })
+        }
+        var imgs = ['http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg',
+                    'http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg',
+                    'http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg',
+                    'http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg',
+                    'http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg',
+                    'http://img4.duitang.com/uploads/item/201411/09/20141109142633_ncKBY.thumb.700_0.jpeg'
+                    ]
+        // 串行加载
+        async function serialImg(imgs){
+            for (let i of imgs) {
+                let img = await loadImg(i)
+                document.body.appendChild(img)
+            }
+        }
+
+        // 并行加载
+        function parallelImg(imgs){
+            for (let i of imgs) {  
+                async function img(){
+                    let img = await loadImg(i)
+                    document.body.appendChild(img) 
+                }         
+                img();           
+            }
+        }
+
+        serialImg(imgs);
+       
+        setTimeout(function(){
+            parallelImg(imgs);
+        },1500)
+       
+    </script>
+</body>
+</html>

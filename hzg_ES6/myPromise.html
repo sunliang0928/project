@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+</head>
+<body>
+    <script>
+
+        class MyPromise {
+            constructor(callback){
+                this.status = 'pending';
+                this.msg = '';
+                callback((res)=>{
+                    this.status = 'resolve';
+                    this.msg = res;
+                },(err)=>{
+                    this.status = 'reject';
+                    this.msg = err;
+                });
+                return this;
+            }
+            then(){
+                console.log(this.status);
+                if(this.status === 'resolve'){
+                    arguments[0](this.msg)
+                }else if(this.status === 'reject'){
+                    arguments[1](this.msg)
+                }
+            }        
+        }
+
+        new MyPromise((resolve,reject)=>{
+            resolve('555');
+        }).then(res=>{
+            console.log(res)
+        },err=>{
+            console.log(err)
+        })
+    </script>
+</body>
+</html>
