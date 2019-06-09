@@ -11,6 +11,82 @@
     11111
     <div class="imgBox"></div>
     <script src="./js/jquery-1.8.3.min.js"></script>
-    <script src="./js/index.js"></script>
+    <!-- <script src="./js/index.js"></script> -->
+    <script>
+        // let obj={a:111};
+        // Object.defineProperty(obj,'a',{
+        //     //是否可写
+        //     writable:true
+        // })
+        // Object.defineProperty(obj,'a',{
+        //     //给对象赋value值
+        //     value:'12345678'
+        // })
+        // Object.defineProperty(obj,'a',{
+        //     //是否可以遍历
+        //     enumerable:false
+        // })
+        // for (let i in obj) {
+        //     console.log(obj)
+        // }
+        // Object.defineProperty(obj,'a',{
+        //     //是否可被删除
+        //     configurable:false
+        // })
+        // Object.defineProperty(obj,'a',{
+        //     //获取对象得值
+        //     get(){
+
+        //     },
+        //     //给对象赋值
+        //     set(val){
+        //         console.log('val',val)
+        //     }
+        // })
+        let obj2={b:123}
+        // let proxy = new Proxy(obj2,{
+        //     get(target,key){
+        //         console.log(target,key)
+        //     },
+        //     set(target,key,val){
+        //         console.log(target,key,val)
+        //     }
+        // })
+        let imgSrc="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2033838781,461625559&fm=27&gp=0.jpg"
+        function imgLoad(url){
+            return new Promise((resolve,reject)=>{
+                let img = new Image();
+                img.src=url
+                img.onload=function(){
+                    resolve(img)
+                }
+                img.onerror=function(e){
+                    reject(e)
+                }
+            })
+        }
+        imgLoad(imgSrc).then(res=>{
+            document.body.appendChild(res)
+            return resv // return 返回一个promise
+        },err=>{
+            console.log(err)
+        }).then(res1=>{
+            console.log(res1)
+        },err1=>{
+            
+        }).then(res2=>{
+
+        },err2=>{
+            
+        }).then(res3=>{
+
+        },err3=>{
+            
+        }).then(res4=>{
+
+        },err4=>{
+            
+        })
+    </script>
 </body>
 </html>
