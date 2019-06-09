@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function myPromise(callback){
+            this.status='pending';
+            this.msg='';
+            callback((data)=>{
+                this.status='resolve';
+                this.msg=data;
+            },()=>{
+                this.status='reject';
+            })
+        }
+        myPromise.prototype.then=function(){
+            let cb=arguments;
+            timer = setInterval(()=>{
+                if(this.status=='resolve'){
+                    cb[0](this.msg);
+                    clearInterval(timer)
+                }else if(this.status=='reject'){
+                    cb[1](this.msg)
+                    clearInterval(timer)
+                }
+            },3000)
+        }
+        new myPromise((resolve,reject)=>{
+            reject(222)
+        }).then(function(res){
+            console.log(res)
+        })
+    </script>
+</body>
+</html>

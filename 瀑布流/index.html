@@ -67,7 +67,7 @@
         }
         imgLoad(imgSrc).then(res=>{
             document.body.appendChild(res)
-            return resv // return 返回一个promise
+            return resv // return 返回一个promise 如果这个Promise返回的是resolve
         },err=>{
             console.log(err)
         }).then(res1=>{
