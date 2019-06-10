@@ -43,14 +43,11 @@
         }
 
         // 并行加载
-        function parallelImg(imgs){
-            for (let i of imgs) {  
-                async function img(){
-                    let img = await loadImg(i)
-                    document.body.appendChild(img) 
-                }         
-                img();           
-            }
+        async function parallelImg(imgs){
+            imgs.forEach(async item => {
+                let img = await loadImg(item);
+                document.body.appendChild(img) 
+            })
         }
 
         serialImg(imgs);
