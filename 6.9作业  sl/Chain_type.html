@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Person(target){
+            console.log('This is '+target)
+        }
+        Person.prototype.num=0;
+        Person.prototype.eat=function(num){
+           this.num=num
+        //    console.log(this)
+
+            return this
+         }
+        Person.prototype.sleep=function(time){
+            console.log('等待'+time+'ms')
+            // console.log('sleep after '+time)
+            setTimeout(()=>{
+                // console.log(this)
+                console.log('sleep after '+time)
+                console.log(this.num)
+            },time)
+            return this
+        }
+         new Person('li').sleep(1000).eat(111).sleep(3000)
+    </script>
+</body>
+</html>

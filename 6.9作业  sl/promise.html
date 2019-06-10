@@ -8,31 +8,33 @@
 </head>
 <body>
     <script>
-        function myPromise(callback){
-            this.status='pending';
-            this.msg='';
-            callback((data)=>{
+        function MyPromise(callback){
+            this.status='pending',
+            this.masg='';
+            callback((res)=>{
                 this.status='resolve';
-                this.msg=data;
-            },()=>{
-                this.status='reject';
+                this.msg=res
+            },(req)=>{
+                this.status='reject',
+                this.msg=new Error();
             })
         }
-        myPromise.prototype.then=function(){
+        MyPromise.prototype.then=function(){
             let cb=arguments;
             timer = setInterval(()=>{
                 if(this.status=='resolve'){
+                    console.log(cb)
                     cb[0](this.msg);
                     clearInterval(timer)
                 }else if(this.status=='reject'){
-                    cb[1](this.msg)
+                    cb[0](this.msg);
                     clearInterval(timer)
                 }
-            },3000)
+            },1000)
         }
-        new myPromise((resolve,reject)=>{
-            reject(222)
-        }).then(function(res){
+        new MyPromise((resolve,reject)=>{
+            reject('000')
+        }).then((res)=>{
             console.log(res)
         })
     </script>
